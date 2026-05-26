@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140">
+  <!-- Body/Shirt -->
+  <ellipse cx="60" cy="125" rx="28" ry="18" fill="#1a1a2e"/>
+  <rect x="40" y="108" width="40" height="20" rx="5" fill="#1a1a2e"/>
+  <!-- Gold chain -->
+  <path d="M48 112 Q60 118 72 112" stroke="#ffd700" stroke-width="2" fill="none"/>
+  <circle cx="60" cy="118" r="4" fill="#ffd700"/>
+
+  <!-- Head -->
+  <ellipse cx="60" cy="60" rx="26" ry="30" fill="#c68642"/>
+
+  <!-- Hair - short on sides, longer on top -->
+  <path d="M34 50 Q35 30 55 25 Q70 22 80 30 Q86 38 86 50" fill="#111"/>
+  <!-- Rat tail hanging down the back -->
+  <path d="M78 55 Q85 60 83 75 Q82 90 78 105 Q76 112 74 118" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M74 118 Q72 120 73 122" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Top hair volume -->
+  <path d="M38 48 Q40 28 58 24 Q72 22 80 30 Q84 36 83 48 Q75 38 60 36 Q45 38 38 48" fill="#1a1a1a"/>
+
+  <!-- Eyebrows - thick -->
+  <path d="M44 48 Q50 44 56 48" stroke="#111" stroke-width="2.5" fill="none"/>
+  <path d="M64 48 Q70 44 76 48" stroke="#111" stroke-width="2.5" fill="none"/>
+
+  <!-- Eyes -->
+  <ellipse cx="50" cy="55" rx="5" ry="4.5" fill="#fff"/>
+  <ellipse cx="70" cy="55" rx="5" ry="4.5" fill="#fff"/>
+  <circle cx="50" cy="55" r="2.5" fill="#3d2b1f"/>
+  <circle cx="70" cy="55" r="2.5" fill="#3d2b1f"/>
+  <circle cx="51" cy="54" r="1" fill="#fff"/>
+  <circle cx="71" cy="54" r="1" fill="#fff"/>
+
+  <!-- Nose -->
+  <path d="M58 58 Q60 64 62 58" stroke="#8B6914" stroke-width="1.5" fill="none"/>
+
+  <!-- Slight stubble/beard shadow -->
+  <ellipse cx="60" cy="75" rx="16" ry="10" fill="#b8783a" opacity="0.3"/>
+
+  <!-- Smirk -->
+  <path d="M50 72 Q60 78 70 72" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M68 71 Q72 70 74 72" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+
+  <!-- Ear -->
+  <ellipse cx="34" cy="60" rx="5" ry="7" fill="#c68642"/>
+  <ellipse cx="86" cy="60" rx="5" ry="7" fill="#c68642"/>
+
+  <!-- Sunglasses pushed up on head -->
+  <path d="M40 38 Q60 34 80 38" stroke="#333" stroke-width="2" fill="none"/>
+  <rect x="40" y="34" width="14" height="8" rx="3" fill="#333" opacity="0.7"/>
+  <rect x="66" y="34" width="14" height="8" rx="3" fill="#333" opacity="0.7"/>
+
+  <!-- Playing card in hand -->
+  <rect x="85" y="100" width="18" height="25" rx="2" fill="#fff" transform="rotate(15, 94, 112)"/>
+  <text x="89" y="115" font-size="10" fill="#e74c3c" transform="rotate(15, 94, 112)">A♥</text>
+</svg>

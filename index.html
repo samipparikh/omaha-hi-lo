@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadshif - Omaha Hi-Lo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Menu Screen -->
+        <div id="menu-screen" class="screen active">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">Omaha Hi-Lo Poker</p>
+            </div>
+            <div class="menu-options">
+                <button class="btn-primary" id="btn-single-player">Play vs AI</button>
+                <button class="btn-primary btn-online" id="btn-play-online">Play Online</button>
+                <button class="btn-secondary" id="btn-rules">How to Play</button>
+            </div>
+        </div>
+
+        <!-- Single Player Setup -->
+        <div id="sp-setup-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">Single Player Setup</p>
+            </div>
+            <div class="menu-options">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="sp-name" placeholder="Player" maxlength="12">
+                </div>
+                <div class="form-group">
+                    <label>AI Opponents</label>
+                    <div class="player-count-selector">
+                        <button class="btn-count" id="sp-minus">−</button>
+                        <span id="sp-ai-count">5</span>
+                        <button class="btn-count" id="sp-plus">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Starting Chips</label>
+                    <select id="sp-chips">
+                        <option value="500">$500</option>
+                        <option value="1000" selected>$1,000</option>
+                        <option value="2000">$2,000</option>
+                        <option value="5000">$5,000</option>
+                    </select>
+                </div>
+                <button class="btn-primary" id="btn-start-sp">Start Game</button>
+                <button class="btn-secondary" id="btn-back-sp">Back</button>
+            </div>
+        </div>
+
+        <!-- Online Screen -->
+        <div id="online-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle" id="online-mode-title">Online</p>
+            </div>
+            <div class="menu-options">
+                <div id="online-name-group">
+                    <input type="text" id="online-player-name" placeholder="Your Name" maxlength="12">
+                </div>
+                <button class="btn-primary" id="btn-create-room">Create Room</button>
+                <button class="btn-primary" id="btn-join-room">Join Room</button>
+                <div id="join-code-group" style="display:none;">
+                    <input type="text" id="join-code-input" placeholder="Room Code" maxlength="5" style="text-transform:uppercase;">
+                </div>
+                <button class="btn-primary" id="btn-confirm-join" style="display:none;">Join</button>
+                <div class="online-status" id="online-status"></div>
+                <button class="btn-secondary" id="btn-back-online">Back</button>
+            </div>
+        </div>
+
+        <!-- Online Lobby -->
+        <div id="lobby-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">Room: <span id="lobby-room-code"></span></p>
+            </div>
+            <div class="lobby-players" id="lobby-players"></div>
+            <div class="menu-options">
+                <button class="btn-primary" id="btn-add-ai" style="display:none;">Add AI Player</button>
+                <button class="btn-primary" id="btn-start-online" style="display:none;">Start Game</button>
+                <button class="btn-secondary" id="btn-leave-room">Leave Room</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="game-info">
+                    <span class="phase-badge" id="game-phase">PREFLOP</span>
+                    <span class="pot-display" id="game-pot">Pot: $0</span>
+                </div>
+                <button class="btn-sm btn-leave" id="btn-leave-game">Leave</button>
+            </div>
+
+            <div class="table-area">
+                <div class="opponents-row" id="opponents-row"></div>
+                <div class="poker-table">
+                    <div class="community-cards" id="community-cards"></div>
+                </div>
+            </div>
+
+            <div class="my-section">
+                <div class="my-info">
+                    <span id="my-name">Player</span>
+                    <span id="my-chips">$1000</span>
+                </div>
+                <div class="my-hand" id="my-hand"></div>
+                <div class="actions-bar" id="actions-bar"></div>
+            </div>
+
+            <!-- Results Overlay -->
+            <div class="results-overlay" id="results-overlay">
+                <div id="results-content"></div>
+                <button class="btn-primary" id="btn-next-hand" style="display:none;">Next Hand</button>
+            </div>
+
+            <!-- Action History -->
+            <div class="history-panel" id="history-panel">
+                <h4>Actions</h4>
+                <div id="history-list"></div>
+            </div>
+        </div>
+
+        <!-- Rules Screen -->
+        <div id="rules-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">How to Play</p>
+            </div>
+            <div class="rules-content">
+                <h3>Overview</h3>
+                <p>Omaha Hi-Lo (also called PLO8 or Omaha 8-or-Better) is a split-pot poker game where the pot is divided between the best high hand and the best qualifying low hand.</p>
+
+                <h3>Dealing</h3>
+                <p>Each player receives <strong>4 hole cards</strong>. Five community cards are dealt across the flop, turn, and river.</p>
+
+                <h3>Key Rule</h3>
+                <p>You must use <strong>exactly 2</strong> of your hole cards and <strong>exactly 3</strong> community cards to make your hand. This applies separately for high and low.</p>
+
+                <h3>Pot Split</h3>
+                <ul>
+                    <li><strong>High half:</strong> Best standard poker hand wins</li>
+                    <li><strong>Low half:</strong> Best qualifying low hand wins</li>
+                    <li>If no player qualifies for low, high hand takes the entire pot</li>
+                    <li>One player can "scoop" by winning both halves</li>
+                </ul>
+
+                <h3>Qualifying Low</h3>
+                <p>To qualify for the low pot, you need 5 unpaired cards ranked 8 or below. Aces count as low. Straights and flushes don't disqualify a low hand.</p>
+                <p><strong>Best low:</strong> A-2-3-4-5 (the "wheel")</p>
+                <p><strong>Worst qualifying low:</strong> 4-5-6-7-8</p>
+
+                <h3>Betting Rounds</h3>
+                <ul>
+                    <li><strong>Preflop:</strong> After hole cards are dealt</li>
+                    <li><strong>Flop:</strong> After 3 community cards</li>
+                    <li><strong>Turn:</strong> After 4th community card</li>
+                    <li><strong>River:</strong> After 5th community card</li>
+                </ul>
+
+                <h3>Hand Rankings (High)</h3>
+                <ol>
+                    <li>Royal Flush</li>
+                    <li>Straight Flush</li>
+                    <li>Four of a Kind</li>
+                    <li>Full House</li>
+                    <li>Flush</li>
+                    <li>Straight</li>
+                    <li>Three of a Kind</li>
+                    <li>Two Pair</li>
+                    <li>One Pair</li>
+                    <li>High Card</li>
+                </ol>
+            </div>
+            <div class="menu-options">
+                <button class="btn-secondary" id="btn-back-rules">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="game-engine.js"></script>
+    <script src="ai.js"></script>
+    <script src="online.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
