@@ -14,10 +14,27 @@
     // Menu buttons
     document.getElementById('btn-single-player').addEventListener('click', () => showScreen('sp-setup'));
     document.getElementById('btn-play-online').addEventListener('click', () => showScreen('online'));
+    document.getElementById('btn-settings').addEventListener('click', () => showScreen('settings'));
     document.getElementById('btn-rules').addEventListener('click', () => showScreen('rules'));
+    document.getElementById('btn-feedback').addEventListener('click', () => showScreen('feedback'));
     document.getElementById('btn-back-rules').addEventListener('click', () => showScreen('menu'));
+    document.getElementById('btn-back-settings').addEventListener('click', () => showScreen('menu'));
+    document.getElementById('btn-back-feedback').addEventListener('click', () => showScreen('menu'));
     document.getElementById('btn-back-sp').addEventListener('click', () => showScreen('menu'));
     document.getElementById('btn-back-online').addEventListener('click', () => showScreen('menu'));
+
+    // Settings
+    document.getElementById('setting-sb-minus').addEventListener('click', () => adjustSetting('sb', -5));
+    document.getElementById('setting-sb-plus').addEventListener('click', () => adjustSetting('sb', 5));
+    document.getElementById('setting-bb-minus').addEventListener('click', () => adjustSetting('bb', -10));
+    document.getElementById('setting-bb-plus').addEventListener('click', () => adjustSetting('bb', 10));
+    document.getElementById('setting-chips-minus').addEventListener('click', () => adjustSetting('chips', -100));
+    document.getElementById('setting-chips-plus').addEventListener('click', () => adjustSetting('chips', 100));
+
+    // Feedback
+    document.getElementById('btn-submit-feedback').addEventListener('click', submitFeedback);
+
+    loadSettings();
 
     // Single player setup
     document.getElementById('sp-minus').addEventListener('click', () => adjustAI(-1));
@@ -57,10 +74,13 @@
   function startSinglePlayer() {
     const name = document.getElementById('sp-name').value || 'Player';
     const aiCount = parseInt(document.getElementById('sp-ai-count').textContent);
-    const chips = parseInt(document.getElementById('sp-chips').value);
+    const chips = parseInt(document.getElementById('sp-chips').value) || gameSettings.chips;
     const mode = document.getElementById('sp-mode').value;
 
     game = new OmahaGame(mode);
+    game.smallBlind = gameSettings.sb;
+    game.bigBlind = gameSettings.bb;
+    game.minRaise = gameSettings.bb;
     myId = 'local_player';
     game.addPlayer({ id: myId, name, chips });
     for (let i = 0; i < aiCount; i++) {
@@ -495,6 +515,51 @@
     html += '</div>';
     document.getElementById('results-content').innerHTML = html;
     document.getElementById('btn-next-hand').style.display = 'block';
+  }
+
+  // ============ SETTINGS ============
+
+  let gameSettings = { sb: 10, bb: 20, chips: 1000 };
+
+  function loadSettings() {
+    const saved = localStorage.getItem('quadshif_settings');
+    if (saved) Object.assign(gameSettings, JSON.parse(saved));
+    updateSettingsUI();
+  }
+
+  function saveSettings() {
+    localStorage.setItem('quadshif_settings', JSON.stringify(gameSettings));
+  }
+
+  function adjustSetting(key, delta) {
+    if (key === 'sb') gameSettings.sb = Math.max(5, Math.min(100, gameSettings.sb + delta));
+    if (key === 'bb') gameSettings.bb = Math.max(10, Math.min(200, gameSettings.bb + delta));
+    if (key === 'chips') gameSettings.chips = Math.max(100, Math.min(10000, gameSettings.chips + delta));
+    if (gameSettings.bb <= gameSettings.sb) gameSettings.bb = gameSettings.sb * 2;
+    saveSettings();
+    updateSettingsUI();
+  }
+
+  function updateSettingsUI() {
+    document.getElementById('setting-sb').textContent = gameSettings.sb;
+    document.getElementById('setting-bb').textContent = gameSettings.bb;
+    document.getElementById('setting-chips').textContent = gameSettings.chips;
+  }
+
+  // ============ FEEDBACK ============
+
+  function submitFeedback() {
+    const description = document.getElementById('feedback-description').value.trim();
+    const steps = document.getElementById('feedback-steps').value.trim();
+    const category = document.getElementById('feedback-category').value;
+    if (!description) { alert('Please describe the bug.'); return; }
+    const title = `[Bug] [${category}] ${description.substring(0, 60)}`;
+    const body = `**Category:** ${category}\n\n**Description:**\n${description}\n\n**Steps to reproduce:**\n${steps || 'N/A'}\n\n**Browser:** ${navigator.userAgent}`;
+    const url = `https://github.com/samipparikh/omaha-hi-lo/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}&labels=bug`;
+    window.open(url, '_blank');
+    document.getElementById('feedback-description').value = '';
+    document.getElementById('feedback-steps').value = '';
+    showScreen('menu');
   }
 
   init();

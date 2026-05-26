@@ -17,7 +17,9 @@
             <div class="menu-options">
                 <button class="btn-primary" id="btn-single-player">Play vs AI</button>
                 <button class="btn-primary btn-online" id="btn-play-online">Play Online</button>
+                <button class="btn-secondary" id="btn-settings">Settings</button>
                 <button class="btn-secondary" id="btn-rules">How to Play</button>
+                <button class="btn-secondary btn-feedback" id="btn-feedback">Report a Bug</button>
             </div>
         </div>
 
@@ -198,6 +200,69 @@
             </div>
             <div class="menu-options">
                 <button class="btn-secondary" id="btn-back-rules">Back</button>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">Settings</p>
+            </div>
+            <div class="rules-content">
+                <div class="setting-row">
+                    <span class="setting-label">Small Blind</span>
+                    <div class="player-count-selector">
+                        <button class="btn-count" id="setting-sb-minus">−</button>
+                        <span id="setting-sb">10</span>
+                        <button class="btn-count" id="setting-sb-plus">+</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <span class="setting-label">Big Blind</span>
+                    <div class="player-count-selector">
+                        <button class="btn-count" id="setting-bb-minus">−</button>
+                        <span id="setting-bb">20</span>
+                        <button class="btn-count" id="setting-bb-plus">+</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <span class="setting-label">Starting Chips</span>
+                    <div class="player-count-selector">
+                        <button class="btn-count" id="setting-chips-minus">−</button>
+                        <span id="setting-chips">1000</span>
+                        <button class="btn-count" id="setting-chips-plus">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-options">
+                <button class="btn-secondary" id="btn-back-settings">Back</button>
+            </div>
+        </div>
+
+        <!-- Feedback Screen -->
+        <div id="feedback-screen" class="screen">
+            <div class="title-container">
+                <h1>QUAD<span class="accent">SHIF</span></h1>
+                <p class="subtitle">Report a Bug</p>
+            </div>
+            <div class="rules-content">
+                <div class="feedback-form">
+                    <label class="feedback-label">What happened?</label>
+                    <textarea id="feedback-description" placeholder="Describe the bug..." rows="4"></textarea>
+                    <label class="feedback-label">Steps to reproduce</label>
+                    <textarea id="feedback-steps" placeholder="1. Go to...&#10;2. Click on...&#10;3. See error..." rows="3"></textarea>
+                    <label class="feedback-label">Category</label>
+                    <select id="feedback-category">
+                        <option value="gameplay">Gameplay</option>
+                        <option value="online">Online Multiplayer</option>
+                        <option value="ui">UI / Display</option>
+                        <option value="ai">AI Behavior</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <button class="btn-primary" id="btn-submit-feedback">Submit Bug Report</button>
+                    <button class="btn-secondary" id="btn-back-feedback">Back</button>
+                </div>
             </div>
         </div>
     </div>

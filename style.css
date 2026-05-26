@@ -214,6 +214,20 @@ body {
 .rules-content ul, .rules-content ol { padding-left: 20px; }
 .rules-content li { margin: 4px 0; }
 
+/* Settings */
+.setting-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #0f3460; }
+.setting-label { font-size: 1em; color: #ccc; }
+
+/* Feedback */
+.feedback-form { display: flex; flex-direction: column; gap: 12px; }
+.feedback-label { color: #aaa; font-size: 0.9em; }
+.feedback-form textarea, .feedback-form select {
+  width: 100%; padding: 10px; border: 1px solid #0f3460; border-radius: 8px;
+  background: #1a1a2e; color: #eee; font-size: 0.95em; font-family: inherit; resize: vertical;
+}
+.btn-feedback { background: #16213e; color: #888; border: 1px solid #0f3460; }
+.btn-feedback:hover { border-color: #e74c3c; color: #e74c3c; }
+
 /* Responsive */
 @media (max-width: 600px) {
   .title-container h1 { font-size: 2.2em; }
