@@ -58,8 +58,9 @@
     const name = document.getElementById('sp-name').value || 'Player';
     const aiCount = parseInt(document.getElementById('sp-ai-count').textContent);
     const chips = parseInt(document.getElementById('sp-chips').value);
+    const mode = document.getElementById('sp-mode').value;
 
-    game = new OmahaGame();
+    game = new OmahaGame(mode);
     myId = 'local_player';
     game.addPlayer({ id: myId, name, chips });
     for (let i = 0; i < aiCount; i++) {
@@ -69,6 +70,8 @@
 
     game.startHand();
     showScreen('game');
+    const modeLabels = { hilo: 'Hi-Lo', high: 'High Only', low: 'Low Only' };
+    document.getElementById('game-mode-badge').textContent = modeLabels[mode] || 'Hi-Lo';
     renderGame();
     scheduleAI();
   }
@@ -476,15 +479,19 @@
     const overlay = document.getElementById('results-overlay');
     overlay.classList.add('active');
 
-    let html = '<div class="results-title">Hand Complete</div><div class="results-details">';
     const r = game.lastResult;
+    const modeLabel = r.mode === 'high' ? 'High Only' : r.mode === 'low' ? 'Low Only' : 'Hi-Lo';
+    let html = `<div class="results-title">Hand Complete <span class="mode-tag">${modeLabel}</span></div><div class="results-details">`;
     if (r.high?.length > 0) {
-      html += '<div><strong>High:</strong> ' + r.high.map(w => `<span class="winner">${w.name}</span> ${w.hand || ''} ($${w.amount})`).join(', ') + '</div>';
+      const label = r.mode === 'hilo' ? 'High' : 'Winner';
+      html += `<div><strong>${label}:</strong> ` + r.high.map(w => `<span class="winner">${w.name}</span> ${w.hand || ''} ($${w.amount})`).join(', ') + '</div>';
     }
     if (r.low?.length > 0) {
-      html += '<div><strong>Low:</strong> ' + r.low.map(w => `<span class="winner">${w.name}</span> ${w.hand} ($${w.amount})`).join(', ') + '</div>';
+      const label = r.mode === 'hilo' ? 'Low' : 'Winner';
+      html += `<div><strong>${label}:</strong> ` + r.low.map(w => `<span class="winner">${w.name}</span> ${w.hand} ($${w.amount})`).join(', ') + '</div>';
     }
-    if (r.noLow) html += '<div class="no-low">No qualifying low - high takes all</div>';
+    if (r.noLow && r.mode === 'hilo') html += '<div class="no-low">No qualifying low - high takes all</div>';
+    if (r.noLow && r.mode === 'low') html += '<div class="no-low">No qualifying low - high hand wins as fallback</div>';
     html += '</div>';
     document.getElementById('results-content').innerHTML = html;
     document.getElementById('btn-next-hand').style.display = 'block';

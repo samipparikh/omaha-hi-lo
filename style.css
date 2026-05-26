@@ -83,6 +83,7 @@ body {
   font-size: 0.85em; font-weight: 600; letter-spacing: 1px;
 }
 .pot-display { color: #ffd700; font-weight: bold; font-size: 1.2em; }
+.mode-badge { font-size: 0.75em; background: #4ecdc4; color: #1a1a2e; padding: 3px 10px; border-radius: 5px; font-weight: 600; }
 .btn-sm { padding: 6px 14px; border: none; border-radius: 6px; background: #e74c3c; color: #fff; cursor: pointer; font-size: 0.85em; }
 
 /* Table */
@@ -188,6 +189,7 @@ body {
 .results-overlay.active { display: block; }
 @keyframes slideUp { from { transform: translateX(-50%) translateY(20px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
 .results-title { color: #ffd700; font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
+.mode-tag { font-size: 0.65em; background: #0f3460; padding: 2px 8px; border-radius: 4px; vertical-align: middle; color: #aaa; }
 .results-details { color: #ccc; line-height: 1.6; }
 .winner { color: #4ecdc4; font-weight: bold; }
 .no-low { color: #888; font-style: italic; margin-top: 4px; }

@@ -165,7 +165,8 @@ function getLowDescription(lowValue) {
 }
 
 class OmahaGame {
-  constructor() {
+  constructor(mode) {
+    this.mode = mode || 'hilo'; // 'hilo', 'high', 'low'
     this.reset();
   }
 
@@ -408,30 +409,44 @@ class OmahaGame {
       };
     }
 
-    const highWinners = this.findHighWinners(active, hands);
-    const lowWinners = this.findLowWinners(active, hands);
+    let highWinners = [];
+    let lowWinners = [];
+    let highPot = 0, lowPot = 0;
 
-    let highPot, lowPot;
-    if (lowWinners.length > 0) {
-      highPot = Math.floor(this.pot / 2);
-      lowPot = this.pot - highPot;
-    } else {
+    if (this.mode === 'high') {
+      highWinners = this.findHighWinners(active, hands);
       highPot = this.pot;
-      lowPot = 0;
+    } else if (this.mode === 'low') {
+      lowWinners = this.findLowWinners(active, hands);
+      if (lowWinners.length === 0) {
+        // No qualifying low - high hand wins as fallback
+        highWinners = this.findHighWinners(active, hands);
+        highPot = this.pot;
+      } else {
+        lowPot = this.pot;
+      }
+    } else {
+      // Hi-Lo split
+      highWinners = this.findHighWinners(active, hands);
+      lowWinners = this.findLowWinners(active, hands);
+      if (lowWinners.length > 0) {
+        highPot = Math.floor(this.pot / 2);
+        lowPot = this.pot - highPot;
+      } else {
+        highPot = this.pot;
+      }
     }
 
-    const highShare = Math.floor(highPot / highWinners.length);
+    const highShare = highWinners.length > 0 ? Math.floor(highPot / highWinners.length) : 0;
     const highRem = highPot - highShare * highWinners.length;
     for (let i = 0; i < highWinners.length; i++) {
       highWinners[i].chips += highShare + (i === 0 ? highRem : 0);
     }
 
-    if (lowWinners.length > 0) {
-      const lowShare = Math.floor(lowPot / lowWinners.length);
-      const lowRem = lowPot - lowShare * lowWinners.length;
-      for (let i = 0; i < lowWinners.length; i++) {
-        lowWinners[i].chips += lowShare + (i === 0 ? lowRem : 0);
-      }
+    const lowShare = lowWinners.length > 0 ? Math.floor(lowPot / lowWinners.length) : 0;
+    const lowRem = lowPot - lowShare * lowWinners.length;
+    for (let i = 0; i < lowWinners.length; i++) {
+      lowWinners[i].chips += lowShare + (i === 0 ? lowRem : 0);
     }
 
     this.lastResult = {
@@ -442,10 +457,11 @@ class OmahaGame {
       })),
       low: lowWinners.map(p => ({
         name: p.name,
-        amount: Math.floor(lowPot / lowWinners.length),
+        amount: lowShare,
         hand: getLowDescription(hands[p.id].low)
       })),
       noLow: lowWinners.length === 0,
+      mode: this.mode,
       hands
     };
 

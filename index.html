@@ -41,6 +41,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label>Game Mode</label>
+                    <select id="sp-mode">
+                        <option value="hilo" selected>Hi-Lo (Split Pot)</option>
+                        <option value="high">High Only</option>
+                        <option value="low">Low Only</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Starting Chips</label>
                     <select id="sp-chips">
                         <option value="500">$500</option>
@@ -63,6 +71,14 @@
             <div class="menu-options">
                 <div id="online-name-group">
                     <input type="text" id="online-player-name" placeholder="Your Name" maxlength="12">
+                </div>
+                <div class="form-group">
+                    <label>Game Mode</label>
+                    <select id="online-mode">
+                        <option value="hilo" selected>Hi-Lo (Split Pot)</option>
+                        <option value="high">High Only</option>
+                        <option value="low">Low Only</option>
+                    </select>
                 </div>
                 <button class="btn-primary" id="btn-create-room">Create Room</button>
                 <button class="btn-primary" id="btn-join-room">Join Room</button>
@@ -95,6 +111,7 @@
                 <div class="game-info">
                     <span class="phase-badge" id="game-phase">PREFLOP</span>
                     <span class="pot-display" id="game-pot">Pot: $0</span>
+                    <span class="mode-badge" id="game-mode-badge"></span>
                 </div>
                 <button class="btn-sm btn-leave" id="btn-leave-game">Leave</button>
             </div>
